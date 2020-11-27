@@ -1,0 +1,68 @@
+<html>
+<head>
+    <meta charset="UTF-8">
+    <script src="http://libs.baidu.com/jquery/2.1.4/jquery.min.js"></script>
+    <script src="webjars/bootstrap/4.5.3/js/bootstrap.min.js"></script>
+    <link href="webjars/chart.js">
+    <link href="webjars/bootstrap/4.5.3/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<script>
+    $(
+        function () {
+            $.get("/list",
+                function (data) {
+                    for (var i = 0; i < data.length; i++) {
+                        $("#list-dl").append("<dt>" + data.list[i].name + "</dt>" +
+                            "<dd>" + data.list[i].total +
+                            "<input type=\"button\" id=\"" + data.list[i].name + "\" value=\"查看详细\"/>" +
+                            "</dd>");
+                        //绑定事件
+                        $("input").click(
+                            function () {
+                                var name = this.id + "1";
+                                var $this = $(this);
+                                $("#" + name).remove();
+                                $.get("/form/" + this.id, function (data) {
+
+                                    var html = "<table id=\"" + name + "\" class=\"table table-striped table-bordered table-hover table-condensed\"><tr><th>项目</th><th>接口名称</th><th>调用次数</th></tr>";
+
+                                    for (var i = 0; i < data.length; i++) {
+                                        html = html + "<tr>" +
+                                            "<td>" + data.message[i].projectName + "</td>" +
+                                            "<td>" + data.message[i].interfaceName + "</td>" +
+                                            "<td>" + data.message[i].total + "</td>" +
+                                            "</tr>";
+                                    }
+
+                                    html = html + "</table>";
+                                    $this.after(html);
+
+                                });
+                            }
+                        );
+                    }
+                }
+            );
+            //$.get结束
+
+        }
+    )
+</script>
+<body>
+<!--列表区域-->
+<div id="div01">
+    <h1>水平的定义列表</h1>
+    <dl id="list-dl" class="dl-horizontal">
+    </dl>
+
+</div>
+
+<!--图表区域-->
+<div id="div02">
+
+</div>
+</body>
+<script>
+
+</script>
+</html>
