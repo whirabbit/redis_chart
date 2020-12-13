@@ -5,7 +5,7 @@ spring:
     active: enc
   redis:
     # enc profile
-    host: xx.xx.xx.xx
+    # host: xx.xx.xx.xx
     lettuce:
       pool:
         max-active: 100
